@@ -5,3 +5,4 @@ object User extends cagette.Cageot[models.User, Long] {
       models.User(1, "Chaqouri","Jamal","j@j.j")
   ) 
 }
+

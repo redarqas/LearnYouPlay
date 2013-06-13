@@ -74,9 +74,18 @@ GET      /ch06/login                           controllers.ch06.Exercises.login(
 GET      /ch06/welcome                         controllers.ch06.Exercises.welcome()
 GET      /ch06/youCan                          controllers.ch06.Exercises.youCan()
 
+#---------------------------------------
+# Chapter 07 : Content negotiation 
+#---------------------------------------
 
+GET      /ch07/list                          controllers.ch07.Exercises.list()
+GET      /ch07/sylk                          controllers.ch07.Exercises.sylk()
 
+#---------------------------------------
+# Chapter 08 : Asynchronous results 
+#---------------------------------------
 
+GET      /ch08/accessDB                          controllers.ch08.Exercises.accessDB()
 
 
 
