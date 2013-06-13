@@ -1,0 +1,84 @@
+# Routes
+# This file defines all ch01.Exercises routes (Higher priority routes first)
+# ~~~~
+#------------------
+#Chapter 01
+#------------------
+# Static path
+GET     /                           controllers.ch01.Exercises.index
+GET     /echoVal                    controllers.ch01.Exercises.echoVal
+GET     /echoBlock                  controllers.ch01.Exercises.echoBlock
+GET     /echoRequest                controllers.ch01.Exercises.echoRequest
+GET     /echoImplicitRequest        controllers.ch01.Exercises.echoImplicitRequest
+GET     /echoWithBodyParser         controllers.ch01.Exercises.echoWithBodyParser
+GET     /simpleOkResult             controllers.ch01.Exercises.simpleOkResult
+GET     /ok                         controllers.ch01.Exercises.ok
+GET     /other                      controllers.ch01.Exercises.other
+GET     /redirectIt                 controllers.ch01.Exercises.redirectMe
+GET     /myTODO                     controllers.ch01.Exercises.myTODO
+GET     /withDefault                controllers.ch01.Exercises.withDefault(id: Long ?= 1)
+GET     /optionalParam              controllers.ch01.Exercises.optionalParam(version: Option[String])
+
+# Dynamic part 
+GET     /sayHello/:name             controllers.ch01.Exercises.echoProvidedName(name: String)
+GET     /resayHello/:name           controllers.ch01.Exercises.redirectToAction(name: String)
+GET     /sayReverseHello/:name      controllers.ch01.Exercises.reverseEchoProvidedName(name: String)
+# Span several /
+GET     /span/*theSpan              controllers.ch01.Exercises.spanIt(theSpan: String)
+# define a limit /
+GET     /limit/$id<[0-1]>           controllers.ch01.Exercises.limitZeroOne(id: Long)
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+#-----------------------------------
+# Chapter 03 : manipulating results 
+#-----------------------------------
+
+GET     /ch03/charsetIso_8859_1                controllers.ch03.Exercises.charsetIso_8859_1()
+GET     /ch03/hello                            controllers.ch03.Exercises.hello()
+GET     /ch03/helloAddCookie                   controllers.ch03.Exercises.helloAddCookie()
+GET     /ch03/helloDiscardCookie               controllers.ch03.Exercises.helloDiscardCookie()
+
+#---------------------------------------
+# Chapter 04 : Session and Flash scopes 
+#---------------------------------------
+
+GET     /ch04/login                            controllers.ch04.Exercises.login()
+GET     /ch04/welecome                         controllers.ch04.Exercises.welecome()
+GET     /ch04/logout                           controllers.ch04.Exercises.logout()
+GET     /ch04/save                             controllers.ch04.Exercises.save()
+GET     /ch04/home                             controllers.ch04.Exercises.home()
+GET     /ch04/lostFlash                        controllers.ch04.Exercises.lostFlash()
+
+#---------------------------------------
+# Chapter 05 : BodyParsers 
+#---------------------------------------
+
+PUT     /ch05/save                             controllers.ch05.Exercises.save()
+POST    /ch05/saveText                         controllers.ch05.Exercises.saveText()
+POST    /ch05/limitedText                      controllers.ch05.Exercises.limitedText()
+POST    /ch05/saveUpload                       controllers.ch05.Exercises.saveUpload()
+POST    /ch05/saveUploads                      controllers.ch05.Exercises.saveUploads()
+POST    /ch05/saveLimitUploads                 controllers.ch05.Exercises.saveLimitUploads()
+GET     /ch05/login                            controllers.ch05.Exercises.login
+
+#---------------------------------------
+# Chapter 06 : Action composition 
+#---------------------------------------
+
+POST     /ch06/index                           controllers.ch06.Exercises.index()
+POST     /ch06/hello                           controllers.ch06.Exercises.hello()
+POST     /ch06/user                            controllers.ch06.Exercises.user()
+GET      /ch06/needAuthenticateUser            controllers.ch06.Exercises.needAuthenticateUser()
+GET      /ch06/login                           controllers.ch06.Exercises.login()
+GET      /ch06/welcome                         controllers.ch06.Exercises.welcome()
+GET      /ch06/youCan                          controllers.ch06.Exercises.youCan()
+
+
+
+
+
+
+
+
+
