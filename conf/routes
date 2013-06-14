@@ -88,6 +88,20 @@ GET      /ch07/sylk                          controllers.ch07.Exercises.sylk()
 GET      /ch08/accessDB                          controllers.ch08.Exercises.accessDB()
 GET      /ch08/accessDBTimeout                   controllers.ch08.Exercises.accessDBTimeout()
 
+#---------------------------------------
+# Chapter 09 : Streaming HTTP responses
+#---------------------------------------
+
+GET      /ch09/index                          controllers.ch09.Exercises.index()
+GET      /ch09/sendHeavyFile                  controllers.ch09.Exercises.sendHeavyFile()
+GET      /ch09/sendDownload                   controllers.ch09.Exercises.sendDownload()
+GET      /ch09/sendFileDisplay                controllers.ch09.Exercises.sendFileDisplay()
+GET      /ch09/stream                controllers.ch09.Exercises.stream()
+
+
+
+
+
 
 
 
