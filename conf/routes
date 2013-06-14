@@ -86,6 +86,7 @@ GET      /ch07/sylk                          controllers.ch07.Exercises.sylk()
 #---------------------------------------
 
 GET      /ch08/accessDB                          controllers.ch08.Exercises.accessDB()
+GET      /ch08/accessDBTimeout                   controllers.ch08.Exercises.accessDBTimeout()
 
 
 
