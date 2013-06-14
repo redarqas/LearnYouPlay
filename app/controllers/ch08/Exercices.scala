@@ -30,10 +30,10 @@ object Exercises extends Controller {
   def accessDBTimeout = Action { request =>
     //Add timeout definition
     val tiemoutFuture = play.api.libs.concurrent.Promise.timeout("Oops", 1)
-    val users: Future[Seq[models.User]] = Future { dao.User.findAll() }
+    val total: Future[Int] = Future { dao.User.findAll().length }
     Async {
-      Future.firstCompletedOf(Seq(tiemoutFuture, users)) map {
-        case u: Seq[User] => Ok(Json.toJson(u))
+      Future.firstCompletedOf(Seq(tiemoutFuture, total)) map {
+        case u: Int => Ok("Total users is : "+u)
         case s: String => BadRequest(s)
       }
     }

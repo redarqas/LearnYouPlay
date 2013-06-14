@@ -96,7 +96,17 @@ GET      /ch09/index                          controllers.ch09.Exercises.index()
 GET      /ch09/sendHeavyFile                  controllers.ch09.Exercises.sendHeavyFile()
 GET      /ch09/sendDownload                   controllers.ch09.Exercises.sendDownload()
 GET      /ch09/sendFileDisplay                controllers.ch09.Exercises.sendFileDisplay()
-GET      /ch09/stream                controllers.ch09.Exercises.stream()
+GET      /ch09/stream                         controllers.ch09.Exercises.stream()
+
+#---------------------------------------
+# Chapter 09 : Comet sockets
+#---------------------------------------
+
+GET      /ch10/comet                         controllers.ch10.Exercises.comet()
+GET      /ch10/betterComet                   controllers.ch10.Exercises.betterComet()
+GET      /ch10/helperComet                   controllers.ch10.Exercises.helperComet()
+GET      /ch10/parentComet                   controllers.ch10.Exercises.parentComet()
+GET      /ch10/iframeComet                   controllers.ch10.Exercises.iframeComet()
 
 
 

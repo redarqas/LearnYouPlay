@@ -1,12 +1,10 @@
 package controllers.ch09
 
-import play.api._
 import play.api.libs.iteratee.Enumerator
-import play.api.mvc._
-import scala.concurrent.Future
-import play.api.libs.concurrent.Execution.Implicits._
-import play.api.libs.json._
-import play.api.libs.iteratee.Iteratee
+import play.api.mvc.Action
+import play.api.mvc.Controller
+import play.api.mvc.ResponseHeader
+import play.api.mvc.SimpleResult
 
 //Since HTTP 1.1, to keep a single connection open to serve several HTTP requests and responses,
 //the server must send the appropriate Content-Length HTTP header along with the response
