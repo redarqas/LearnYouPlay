@@ -1,0 +1,23 @@
+@(customer : models.Customer, orders: Seq[(models.Order,models.Product)])
+
+@import tags._
+@scripts = {
+    <script type="text/javascript">console.log("orders page specific js");</script>
+}
+@**************************************************************
+* Use layout as base                                          *
+**************************************************************@
+@main(title = "Home", scripts) {
+  @*****************
+  * Define sidebar *
+  *****************@
+  <h1>Sidebar</h1>
+} {
+  @*****************
+  * Define content *
+  *****************@
+   <h1>Shop</h1>
+   @list(orders.isEmpty)(orders)
+   <h4>Thank you @(customer.firstName + " " + customer.name)</h4>
+  
+}

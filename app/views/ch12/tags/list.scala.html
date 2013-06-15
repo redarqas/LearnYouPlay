@@ -1,0 +1,17 @@
+@*******************************************************
+* Tag is like as function, we can pass parameters      *
+*******************************************************@
+@(empty : Boolean)(orders: Seq[(models.Order, models.Product)])
+@empty match {
+  case false => {
+    <ul>
+      @for((order, product) <- orders) {
+        <li>@product.name @(order.quantity * product.price) </li>
+      }
+     </ul>
+  }
+  case true => {
+     <div>No orders</div>
+  }
+}
+

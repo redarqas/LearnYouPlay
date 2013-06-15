@@ -99,7 +99,7 @@ GET      /ch09/sendFileDisplay                controllers.ch09.Exercises.sendFil
 GET      /ch09/stream                         controllers.ch09.Exercises.stream()
 
 #---------------------------------------
-# Chapter 09 : Comet sockets
+# Chapter 10 : Comet sockets
 #---------------------------------------
 
 GET      /ch10/comet                         controllers.ch10.Exercises.comet()
@@ -108,9 +108,20 @@ GET      /ch10/helperComet                   controllers.ch10.Exercises.helperCo
 GET      /ch10/parentComet                   controllers.ch10.Exercises.parentComet()
 GET      /ch10/iframeComet                   controllers.ch10.Exercises.iframeComet()
 
+#---------------------------------------
+# Chapter 11 : WebSockets
+#---------------------------------------
 
+GET      /ch11/index                         controllers.ch11.Exercises.index()
+GET      /ch11/close                         controllers.ch11.Exercises.close()
 
+#---------------------------------------
+# Chapter 12 : The template engine
+#---------------------------------------
 
+GET      /ch12/:id/basics                    controllers.ch12.Exercises.basics(id: Long)
+GET      /ch12/:id/orders                    controllers.ch12.Exercises.orders(id: Long)
+GET      /ch12/rawcontent                    controllers.ch12.Exercises.rawContent
 
 
 

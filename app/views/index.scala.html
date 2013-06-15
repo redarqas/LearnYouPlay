@@ -1,13 +1,11 @@
 @(message: String)
 
-@main("Welcome to Play 2.1") {
     
-    @play20.welcome(message)
+    <iframe src="/ch10/iframeComet"></iframe>
+
     <script type="text/javascript">
       var cometMessage = function(event) {
       console.log('Received event: ' + event)
     }
     </script>
     
-    <iframe src="/ch10/iframeComet"></iframe>
-}
