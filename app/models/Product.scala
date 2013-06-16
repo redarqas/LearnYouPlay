@@ -1,3 +1,3 @@
 package models
 
-case class Product(id: Long, name: String, price: Double) 
+case class Product(id: Long, name: String, price: BigDecimal) 

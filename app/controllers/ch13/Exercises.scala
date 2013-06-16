@@ -17,9 +17,12 @@ import play.api.data.Forms._
 //and deconstruct it (tarnsform a Scala value into a Form)
 
 object Exercises extends Controller {
+  val productForm = Form {
+    mapping(
+      "id" -> ignored(123l),
+      "name" -> text,
+      "price" -> bigDecimal)(models.Product.apply _)(models.Product.unapply _)
+  }
   
-  val logingForm = Form(tuple(
-        "email" -> text.verifying(),
-        "password" -> text
-      ))
+
 }

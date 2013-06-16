@@ -123,6 +123,25 @@ GET      /ch12/:id/basics                    controllers.ch12.Exercises.basics(i
 GET      /ch12/:id/orders                    controllers.ch12.Exercises.orders(id: Long)
 GET      /ch12/rawcontent                    controllers.ch12.Exercises.rawContent
 
+#---------------------------------------
+# Chapter 13 : TODO : Forms
+#---------------------------------------
+
+#---------------------------------------
+# Chapter 14 : Json
+#---------------------------------------
+
+GET     /ch14/serveParsedJsonString         controllers.ch14.Exercises.serveParsedJsonString()
+GET     /ch14/serveRawJson                  controllers.ch14.Exercises.serveRawJson()
+GET     /ch14/servePrettyJsonString         controllers.ch14.Exercises.servePrettyJsonString()
+GET     /ch14/productName                   controllers.ch14.Exercises.productName()
+GET     /ch14/productsNames                 controllers.ch14.Exercises.productsNames()
+GET     /ch14/convertToScalaVal             controllers.ch14.Exercises.convertToScalaVal()
+GET     /ch14/validateOk                    controllers.ch14.Exercises.validateOk()
+GET     /ch14/validateNotFound              controllers.ch14.Exercises.validateNotFound()
+GET     /ch14/validateConvertNotPossible    controllers.ch14.Exercises.validateConvertNotPossible()
+GET     /ch14/validateRecursive             controllers.ch14.Exercises.validateRecursive()
+GET     /ch14/scalaToJson                   controllers.ch14.Exercises.scalaToJson()
 
 
 
