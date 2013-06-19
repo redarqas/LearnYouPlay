@@ -28,33 +28,29 @@ case class MembrePrincipal(
 
 object MembrePrincipal {
 
-  
-  
-  val test =(__ \ "mp_regime").read[models.calculette.Regime].map(r => "mp_regime" -> Option(r.toString)) 
-  
-  val readBasics = (__ \ "mp_dt_nais").read[Option[org.joda.time.DateTime]](jodaDateReads("dd/MM/yyyy") map (Option(_))) and
+  val readBasics = (__ \ "mp_dt_nais").read[org.joda.time.DateTime](jodaDateReads("dd/MM/yyyy")).map(d => "mp_dt_nais" -> Option(d.toString("dd/MM/yyyy"))) and
     (__ \ "mp_regime").read[models.calculette.Regime].map(r => "mp_regime" -> Option(r.toString)) and
-    (__ \ "mp_aphp").read[Option[models.calculette.Top]] and
-    (__ \ "garantie").read[Option[models.calculette.Garantie]] and
-    (__ \ "offre").read[Option[models.calculette.Offre]] and
-    (__ \ "aa_effet").read[Option[org.joda.time.DateTime]](jodaDateReads("MMyyyy") map (Option(_))) and
-    (__ \ "mp_prev").read[Option[String]] and
-    (__ \ "top_infoscj").read[Option[models.calculette.Top]] and
-    (__ \ "top_infosenf").read[Option[models.calculette.Top]] and
-    (__ \ "top_infosasc").read[Option[models.calculette.Top]] and
-    (__ \ "taux_mino").readNullable[models.calculette.TauxMino] and
-    (__ \ "mp_anc").readNullable[String] and
-    (__ \ "cj_anc").readNullable[String] and
-    (__ \ "num_id").readNullable[String] and
-    (__ \ "num_devis").readNullable[String]
+    (__ \ "mp_aphp").read[models.calculette.Top].map(r => "mp_aphp" -> Option(r.toString)) and
+    (__ \ "garantie").read[models.calculette.Garantie].map(r => "garantie" -> Option(r.toString)) and
+    (__ \ "offre").read[models.calculette.Offre].map(r => "offre" -> Option(r.toString)) and
+    (__ \ "aa_effet").read[org.joda.time.DateTime](jodaDateReads("MMyyyy")).map(d => "aa_effet" -> Option(d.toString("MMyyyy"))) and
+    (__ \ "mp_prev").read[String].map("mp_prev" -> Option(_)) and
+    (__ \ "top_infoscj").read[models.calculette.Top].map(r => "top_infoscj" -> Option(r.toString)) and
+    (__ \ "top_infosenf").read[models.calculette.Top].map(r => "top_infosenf" -> Option(r.toString)) and
+    (__ \ "top_infosasc").read[models.calculette.Top].map(r => "top_infosasc" -> Option(r.toString)) and
+    (__ \ "taux_mino").readNullable[models.calculette.TauxMino].map("taux_mino" -> _.map(_.toString)) and
+    (__ \ "mp_anc").readNullable[String].map("mp_anc" -> _) and
+    (__ \ "cj_anc").readNullable[String].map("cj_anc" -> _) and
+    (__ \ "num_id").readNullable[String].map("num_id" -> _) and
+    (__ \ "num_devis").readNullable[String].map("num_devis" -> _)
 
-  val readMp_aa_adh = ((__ \ "aa_effet").read[org.joda.time.DateTime](jodaDateReads("MMyyyy")) and
+  val readMp_aa_adh: Reads[(String, Option[String])] = ((__ \ "aa_effet").read[org.joda.time.DateTime](jodaDateReads("MMyyyy")) and
     (__ \ "mp_aa_adh").readNullable[org.joda.time.DateTime](jodaDateReads("yyyy"))).tupled.map(r => r match {
-      case (d, None) => Some(d.toString("yyyy"))
-      case (_, Some(a)) => Some(a.toString("yyyy"))
+      case (d, None) => "mp_aa_adh" -> Option(d.toString("yyyy"))
+      case (_, Some(a)) => "mp_aa_adh" -> Option(a.toString("yyyy"))
     })
-    
-  val readValidModule_mp: Reads[Option[String]] = (
+
+  val readModule_mp: Reads[(String, Option[String])] = (
     (__ \ "garantie").readNullable[models.calculette.Garantie] and
     (__ \ "module_mp").readNullable[String]).tupled.filter(ValidationError("module_mp requis si garantie est à 'P1' ou 'AM'"))(r => {
       r match {
@@ -62,41 +58,7 @@ object MembrePrincipal {
         case (Some(models.calculette.Garantie.GARANTIE_AM), None) => false
         case _ => true
       }
-    }) map (_._2)
-  
-  implicit val readMembrePrincipal = (readBasics and readMp_aa_adh and readValidModule_mp)((
-    mp_dt_nais,
-    mp_regime,
-    mp_aphp,
-    garantie,
-    offre,
-    mp_aa_adh,
-    mp_prev,
-    top_infoscj,
-    top_infosenf,
-    top_infosasc,
-    taux_mino,
-    mp_anc,
-    cj_anc,
-    num_id,
-    num_devis,
-    aa_effet,
-    module_mp) => Map[String, Option[String]]("mp_dt_nais" -> mp_dt_nais,
-    "mp_regime" -> mp_regime,
-    "mp_aphp" -> mp_aphp,
-    "garantie" -> garantie,
-    "offre" -> offre,
-    "mp_aa_adh" -> mp_aa_adh,
-    "mp_prev" -> mp_prev,
-    "top_infoscj" -> top_infoscj,
-    "top_infosenf" -> top_infosenf,
-    "top_infosasc" -> top_infosasc,
-    "taux_mino" -> taux_mino,
-    "mp_anc" -> mp_anc,
-    "cj_anc" -> cj_anc,
-    "num_id" -> num_id,
-    "num_devis" -> num_devis,
-    "aa_effet" -> aa_effet,
-    "module_mp" -> module_mp))
+    }) map ("module_mp" -> _._2)
 
+  implicit val readMembrePrincipal = (readBasics and readMp_aa_adh and readModule_mp)(Map(_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _))
 }

@@ -144,6 +144,7 @@ GET     /ch14/validateRecursive             controllers.ch14.Exercises.validateR
 GET     /ch14/scalaToJson                   controllers.ch14.Exercises.scalaToJson()
 GET     /ch14/readContractor                controllers.ch14.Exercises.readContractor()
 GET     /ch14/readCalcul                    controllers.ch14.Exercises.readCalcul()
+POST     /ch14/calculate                    controllers.ch14.Exercises.calculate()
 
 
 

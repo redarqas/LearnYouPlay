@@ -190,6 +190,8 @@ object Exercises extends Controller {
     "cj_anc" -> JsString("0"))
 
   def readCalcul = Action {
+    
+    val v = Json.prettyPrint(calcul)
     val r = CalculCotisations.readCalculCotisations.reads(calcul)
     r fold (
       errors => {
@@ -204,6 +206,11 @@ object Exercises extends Controller {
 
         Ok(errors.size.toString)
       },
-      c => Ok(c.queryString))
+      c => Ok(v))
+  }
+  
+  def calculate = Action(parse.json) { implicit request => 
+    val o = CalculCotisations.readCalculCotisations.reads(request.body)
+    Ok(o.get.queryString)
   }
 }
