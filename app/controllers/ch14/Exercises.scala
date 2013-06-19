@@ -15,6 +15,14 @@ import views.html.defaultpages.badRequest
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json.Reads
+import models.Contractor
+import models.calculette.CalculCotisations
+import models.calculette.bloc.MembrePrincipal
+import models.calculette.bloc.Enfants
+import models.calculette.bloc.Conjoint
+import models.calculette.bloc.Ascendant1
+import models.calculette.bloc.Ascendant2
+import models.calculette.bloc._
 
 //Json Object : name / value
 //value are : string, number, Json Object, Json array, true/false, null
@@ -127,5 +135,75 @@ object Exercises extends Controller {
   }
 
   //Reads : Json To Scala Value with validation
- 
+  val jsContractor = Json.obj("name" -> JsString("jamal"),
+    "email" -> JsString("jamal"),
+    "garantie" -> JsString("4G"),
+    "complement" -> JsString("complement"))
+  def readContractor = Action {
+    val contractor = Contractor.readContractor.reads(jsContractor)
+    contractor fold (
+      errors => {
+        val rr = errors.foldLeft(" ")((acc, e) => acc + " " + "A ")
+        Ok(errors.size.toString)
+      },
+      c => Ok(views.html.ch14.readContractor.render(c)))
+  }
+
+  val calcul = Json.obj("num_id" -> JsString("001231213889105"),
+    "num_devis" -> JsString("rabelle_001234"),
+    "mp_dt_nais" -> JsString("03/04/1974"),
+    "mp_aa_adh" -> JsString("2010"),
+    "mp_regime" -> JsString("1"),
+    "mp_aphp" -> JsString("O"),
+    "top_infoscj" -> JsString("O"),
+    "top_infosenf" -> JsString("O"),
+    "top_infosasc" -> JsString("O"),
+    "cj_dt_nais" -> JsString("1975-10-18"),
+    "cj_aa_adh" -> JsString("2010"),
+    "cj_regime" -> JsString("1"),
+    "cj_aphp" -> JsString("O"),
+    "nb_enf_rg" -> JsString("2"),
+    "nb_enf_am" -> JsString("2"),
+    "nb_enf_ar" -> JsString("0"),
+    "module_mp" -> JsString("0"),
+    "module_cj" -> JsString("0"),
+    "module_enf" -> JsString("0"),
+    "module_asc1" -> JsString("0"),
+    "module_asc2" -> JsString("0"),
+    "module_asc3" -> JsString("0"),
+    "module_asc4" -> JsString("0"),
+    "asc1_dt_nais" -> JsString("1925-01-17"),
+    "asc1_regime" -> JsString("2"),
+    "asc2_dt_nais" -> JsString("1919-05-30"),
+    "asc2_regime" -> JsString("2"),
+    "asc3_dt_nais" -> JsString("1939-12-01"),
+    "asc3_regime" -> JsString("1"),
+    "asc4_dt_nais" -> JsString("1939-12-01"),
+    "asc4_regime" -> JsString("1"),
+    "garantie" -> JsString("4G"),
+    "offre" -> JsString("01"),
+    "aa_effet" -> JsString("102010"),
+    "mp_prev" -> JsString("O"),
+    "cj_prev" -> JsString("O"),
+    "taux_mino" -> JsString("00"),
+    "mp_anc" -> JsString("0"),
+    "cj_anc" -> JsString("0"))
+
+  def readCalcul = Action {
+    val r = CalculCotisations.readCalculCotisations.reads(calcul)
+    r fold (
+      errors => {
+        errors.foreach(error => {
+          error match {
+            case (p, s) => {
+              println("path : --> " + p)
+              s.foreach(ve => println(ve))
+            }
+          }
+        })
+
+        Ok(errors.size.toString)
+      },
+      c => Ok(c.queryString))
+  }
 }

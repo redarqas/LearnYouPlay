@@ -142,6 +142,8 @@ GET     /ch14/validateNotFound              controllers.ch14.Exercises.validateN
 GET     /ch14/validateConvertNotPossible    controllers.ch14.Exercises.validateConvertNotPossible()
 GET     /ch14/validateRecursive             controllers.ch14.Exercises.validateRecursive()
 GET     /ch14/scalaToJson                   controllers.ch14.Exercises.scalaToJson()
+GET     /ch14/readContractor                controllers.ch14.Exercises.readContractor()
+GET     /ch14/readCalcul                    controllers.ch14.Exercises.readCalcul()
 
 
 

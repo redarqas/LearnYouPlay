@@ -11,7 +11,7 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     jdbc,
     anorm,
-    "guillaume.bort" %% "cagette" % "0.3-SNAPSHOT",
+    "guillaume.bort" %% "cagette" % "0.3",
     "org.specs2" %% "specs2" % "1.14" % "test"
   )
 
