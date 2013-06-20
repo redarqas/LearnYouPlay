@@ -1,18 +1,11 @@
-package models.calculette
+package models.calculette.enums
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads
 import play.api.libs.json.Reads._
 import play.api.data.validation.ValidationError
 
-sealed trait TauxMino {
-  override def toString() = this match {
-    case TauxMino.TAUXMINO_00 => "00"
-    case TauxMino.TAUXMINO_05 => "05"
-    case TauxMino.TAUXMINO_15 => "15"
-    case TauxMino.TAUXMINO_25 => "25"
-  }
-}
+sealed trait TauxMino 
 
 object TauxMino {
   case object TAUXMINO_00 extends TauxMino

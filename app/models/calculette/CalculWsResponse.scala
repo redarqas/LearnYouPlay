@@ -1,6 +1,6 @@
 package mnhlib.models.calculette
 
-class WsProcCalcOut(
+class CalculWsResponse(
   NUM_ID: String,
   NUM_DEVIS: String,
   PREV_MP: String,

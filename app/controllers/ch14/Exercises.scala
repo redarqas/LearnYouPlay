@@ -16,12 +16,12 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json.Reads
 import models.Contractor
-import models.calculette.CalculCotisations
-import models.calculette.bloc.MembrePrincipal
-import models.calculette.bloc.Enfants
-import models.calculette.bloc.Conjoint
-import models.calculette.bloc.Ascendants
-import models.calculette.bloc._
+import models.calculette.CalculWsRequest
+import models.calculette.blocs.MembrePrincipal
+import models.calculette.blocs.Enfants
+import models.calculette.blocs.Conjoint
+import models.calculette.blocs.Ascendants
+import models.calculette.blocs._
 
 //Json Object : name / value
 //value are : string, number, Json Object, Json array, true/false, null
@@ -191,7 +191,7 @@ object Exercises extends Controller {
   def readCalcul = Action {
     
     val v = Json.prettyPrint(calcul)
-    val r = CalculCotisations.readCalculCotisations.reads(calcul)
+    val r = CalculWsRequest.readCalculWsRequest.reads(calcul)
     r fold (
       errors => {
         errors.foreach(error => {
@@ -209,7 +209,7 @@ object Exercises extends Controller {
   }
   
   def calculate = Action(parse.json) { implicit request => 
-    val o = CalculCotisations.readCalculCotisations.reads(request.body)
+    val o = CalculWsRequest.readCalculWsRequest.reads(request.body)
     Ok(o.get.queryString)
   }
 }

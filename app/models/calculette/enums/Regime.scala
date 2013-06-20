@@ -1,4 +1,4 @@
-package models.calculette
+package models.calculette.enums
 
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -6,11 +6,7 @@ import play.api.libs.json.Reads
 import play.api.libs.json.Reads._
 import play.api.data.validation.ValidationError
 
-sealed trait Regime {
-  override def toString() : String = {
-    this match {case Regime.REGIME1 => "1"; case Regime.REGIME2 => "2" }
-  }
-}
+sealed trait Regime 
 
 object Regime {
   case object REGIME1 extends Regime
