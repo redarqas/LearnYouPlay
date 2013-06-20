@@ -10,10 +10,7 @@ import models.calculette.bloc._
 import MembrePrincipal._
 import Conjoint._
 import Enfants._
-import Ascendant1._
-import Ascendant2._
-import Ascendant3._
-import Ascendant4._
+import Ascendants._
 
 case class CalculCotisations(fields: Map[String, Option[Object]]) {
   val queryString = fields.filter(r => r match {
@@ -23,11 +20,8 @@ case class CalculCotisations(fields: Map[String, Option[Object]]) {
 }
 
 object CalculCotisations {
-  val readCalculCotisations = (readMembrePrincipal and
+  implicit val readCalculCotisations = (readMembrePrincipal and
     readConjoint and
     readEnfants and
-    readAscendant1 and
-    readAscendant2 and
-    readAscendant3 and
-    readAscendant4)((mp, cj, enf, asc1, asc2, asc3, asc4) => CalculCotisations(mp ++ cj ++ enf ++ asc1 ++ asc2 ++ asc3 ++ asc4))
+    readAscendants)((mp, cj, enf, asc) => CalculCotisations(mp ++ cj ++ enf ++ asc))
 }

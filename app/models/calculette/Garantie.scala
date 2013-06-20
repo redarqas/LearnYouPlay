@@ -34,7 +34,7 @@ object Garantie {
   case object GARANTIE_AM extends Garantie
   case object GARANTIE_AS extends Garantie
 
-  implicit val offreRead: Reads[Garantie] = {
+  implicit val garantieRead: Reads[Garantie] = {
     __.read[String].filter(ValidationError("""Valeurs possibles ["4G","2B","P1","ET","LB","G","AB","AM","AS"] """))(List("4G", "2B", "P1", "ET", "LB", "G", "AB", "AM", "AS").contains(_)) map {
       case "4G" => GARANTIE_4G
       case "2B" => GARANTIE_2B

@@ -11,12 +11,14 @@ object Conjoint {
 
   val readCj_dt_nais = (
     (__ \ "top_infoscj").readNullable[models.calculette.Top] and
-    (__ \ "cj_dt_nais").readNullable[org.joda.time.DateTime]).tupled.filter(ValidationError("requis si top_infoscj = 'O', format JJ/MM/AAAA"))(r => {
+    ((__ \ "cj_dt_nais").readNullable[String] keepAnd 
+     (__ \ "cj_dt_nais").readNullable[org.joda.time.DateTime](jodaDateReads("dd/MM/yyyy")))
+      ).tupled.filter(ValidationError("requis si top_infoscj = 'O', format JJ/MM/AAAA"))(r => {
       r match {
         case (Some(models.calculette.Top.OUI), Some(_)) => true
         case _ => false
       }
-    }) map ("cj_dt_nais" -> _._2.map(_.toString("dd/MM/yyyy")))
+    }) map ("cj_dt_nais" -> _._2)
 
   val readCj_aa_adh = (
     (__ \ "top_infoscj").readNullable[models.calculette.Top] and
@@ -29,30 +31,36 @@ object Conjoint {
 
   val readCj_regime = (
     (__ \ "top_infoscj").readNullable[models.calculette.Top] and
-    (__ \ "cj_regime").readNullable[models.calculette.Regime]).tupled.filter(ValidationError("""requis si top_infoscj = 'O', valeurs possibles ["1","2"]"""))(r => {
+    ((__ \ "cj_regime").readNullable[String] keepAnd 
+     (__ \ "cj_regime").readNullable[models.calculette.Regime])
+    ).tupled.filter(ValidationError("""requis si top_infoscj = 'O', valeurs possibles ["1","2"]"""))(r => {
       r match {
         case (Some(models.calculette.Top.OUI), Some(_)) => true
         case _ => false
       }
-    }) map ("cj_regime" -> _._2.map(_.toString()))
+    }) map ("cj_regime" -> _._2)
 
   val readCj_aphp = (
     (__ \ "top_infoscj").readNullable[models.calculette.Top] and
-    (__ \ "cj_aphp").readNullable[models.calculette.Top]).tupled.filter(ValidationError("""requis si top_infoscj = 'O', valeurs possible ["O", "N"]"""))(r => {
+    ((__ \ "cj_aphp").readNullable[String] keepAnd
+     (__ \ "cj_aphp").readNullable[models.calculette.Top])
+    ).tupled.filter(ValidationError("""requis si top_infoscj = 'O', valeurs possible ["O", "N"]"""))(r => {
       r match {
         case (Some(models.calculette.Top.OUI), Some(_)) => true
         case _ => false
       }
-    }) map ("cj_aphp" -> _._2.map(_.toString()))
+    }) map ("cj_aphp" -> _._2)
 
   val readCj_prev = (
     (__ \ "top_infoscj").readNullable[models.calculette.Top] and
-    (__ \ "cj_prev").readNullable[models.calculette.Top]).tupled.filter(ValidationError("""requis si top_infosasc = 'O', format "JJ/MM/AAAA" """))(r => {
+    ((__ \ "cj_prev").readNullable[String] keepAnd
+     (__ \ "cj_prev").readNullable[models.calculette.Top])
+    ).tupled.filter(ValidationError("""requis si top_infosasc = 'O', format "JJ/MM/AAAA" """))(r => {
       r match {
         case (Some(models.calculette.Top.OUI), Some(_)) => true
         case _ => false
       }
-    }) map ("cj_prev" -> _._2.map(_.toString()))
+    }) map ("cj_prev" -> _._2)
 
   val readModule_cj = (
     (__ \ "garantie").readNullable[models.calculette.Garantie] and

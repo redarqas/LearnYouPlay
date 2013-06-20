@@ -20,8 +20,7 @@ import models.calculette.CalculCotisations
 import models.calculette.bloc.MembrePrincipal
 import models.calculette.bloc.Enfants
 import models.calculette.bloc.Conjoint
-import models.calculette.bloc.Ascendant1
-import models.calculette.bloc.Ascendant2
+import models.calculette.bloc.Ascendants
 import models.calculette.bloc._
 
 //Json Object : name / value
@@ -158,7 +157,7 @@ object Exercises extends Controller {
     "top_infoscj" -> JsString("O"),
     "top_infosenf" -> JsString("O"),
     "top_infosasc" -> JsString("O"),
-    "cj_dt_nais" -> JsString("1975-10-18"),
+    "cj_dt_nais" -> JsString("19/10/1975"),
     "cj_aa_adh" -> JsString("2010"),
     "cj_regime" -> JsString("1"),
     "cj_aphp" -> JsString("O"),
@@ -172,13 +171,13 @@ object Exercises extends Controller {
     "module_asc2" -> JsString("0"),
     "module_asc3" -> JsString("0"),
     "module_asc4" -> JsString("0"),
-    "asc1_dt_nais" -> JsString("1925-01-17"),
+    "asc1_dt_nais" -> JsString("12/01/1925"),
     "asc1_regime" -> JsString("2"),
-    "asc2_dt_nais" -> JsString("1919-05-30"),
+    "asc2_dt_nais" -> JsString("30/05/1919"),
     "asc2_regime" -> JsString("2"),
-    "asc3_dt_nais" -> JsString("1939-12-01"),
+    "asc3_dt_nais" -> JsString("01/05/1939"),
     "asc3_regime" -> JsString("1"),
-    "asc4_dt_nais" -> JsString("1939-12-01"),
+    "asc4_dt_nais" -> JsString("01/12/1939"),
     "asc4_regime" -> JsString("1"),
     "garantie" -> JsString("4G"),
     "offre" -> JsString("01"),
@@ -206,7 +205,7 @@ object Exercises extends Controller {
 
         Ok(errors.size.toString)
       },
-      c => Ok(v))
+      c => Ok(c.queryString))
   }
   
   def calculate = Action(parse.json) { implicit request => 
