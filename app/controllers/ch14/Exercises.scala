@@ -16,12 +16,9 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json.Reads
 import models.Contractor
-import models.calculette.CalculWsRequest
-import models.calculette.blocs.MembrePrincipal
-import models.calculette.blocs.Enfants
-import models.calculette.blocs.Conjoint
-import models.calculette.blocs.Ascendants
-import models.calculette.blocs._
+import models.Contractor._
+import play.api.libs.json.JsError
+import play.api.libs.functional.FunctionalBuilder
 
 //Json Object : name / value
 //value are : string, number, Json Object, Json array, true/false, null
@@ -136,8 +133,9 @@ object Exercises extends Controller {
   //Reads : Json To Scala Value with validation
   val jsContractor = Json.obj("name" -> JsString("jamal"),
     "email" -> JsString("jamal"),
-    "garantie" -> JsString("4G"),
+    "podium" -> JsString("OR"),
     "complement" -> JsString("complement"))
+    
   def readContractor = Action {
     val contractor = Contractor.readContractor.reads(jsContractor)
     contractor fold (
@@ -148,68 +146,13 @@ object Exercises extends Controller {
       c => Ok(views.html.ch14.readContractor.render(c)))
   }
 
-  val calcul = Json.obj("num_id" -> JsString("001231213889105"),
-    "num_devis" -> JsString("rabelle_001234"),
-    "mp_dt_nais" -> JsString("03/04/1974"),
-    "mp_aa_adh" -> JsString("2010"),
-    "mp_regime" -> JsString("1"),
-    "mp_aphp" -> JsString("O"),
-    "top_infoscj" -> JsString("O"),
-    "top_infosenf" -> JsString("O"),
-    "top_infosasc" -> JsString("O"),
-    "cj_dt_nais" -> JsString("19/10/1975"),
-    "cj_aa_adh" -> JsString("2010"),
-    "cj_regime" -> JsString("1"),
-    "cj_aphp" -> JsString("O"),
-    "nb_enf_rg" -> JsString("2"),
-    "nb_enf_am" -> JsString("2"),
-    "nb_enf_ar" -> JsString("0"),
-    "module_mp" -> JsString("0"),
-    "module_cj" -> JsString("0"),
-    "module_enf" -> JsString("0"),
-    "module_asc1" -> JsString("0"),
-    "module_asc2" -> JsString("0"),
-    "module_asc3" -> JsString("0"),
-    "module_asc4" -> JsString("0"),
-    "asc1_dt_nais" -> JsString("12/01/1925"),
-    "asc1_regime" -> JsString("2"),
-    "asc2_dt_nais" -> JsString("30/05/1919"),
-    "asc2_regime" -> JsString("2"),
-    "asc3_dt_nais" -> JsString("01/05/1939"),
-    "asc3_regime" -> JsString("1"),
-    "asc4_dt_nais" -> JsString("01/12/1939"),
-    "asc4_regime" -> JsString("1"),
-    "garantie" -> JsString("4G"),
-    "offre" -> JsString("01"),
-    "aa_effet" -> JsString("102010"),
-    "mp_prev" -> JsString("O"),
-    "cj_prev" -> JsString("O"),
-    "taux_mino" -> JsString("00"),
-    "mp_anc" -> JsString("0"),
-    "cj_anc" -> JsString("0"))
-
-  def readCalcul = Action {
-    
-    val v = Json.prettyPrint(calcul)
-    val r = CalculWsRequest.readCalculWsRequest.reads(calcul)
-    r fold (
-      errors => {
-        errors.foreach(error => {
-          error match {
-            case (p, s) => {
-              println("path : --> " + p)
-              s.foreach(ve => println(ve))
-            }
-          }
-        })
-
-        Ok(errors.size.toString)
-      },
-      c => Ok(c.queryString))
-  }
-  
-  def calculate = Action(parse.json) { implicit request => 
-    val o = CalculWsRequest.readCalculWsRequest.reads(request.body)
-    Ok(o.get.queryString)
+  def calculate = Action { implicit request =>
+    //QueryString to Json 
+    val v = Json.toJson(request.queryString.map(r => r._1 -> r._2.head))
+    Json.reads[Contractor].reads(v) map { r =>
+      Ok(Json.toJson(r))
+    } recoverTotal {
+      e => BadRequest("Detected error:" + JsError.toFlatJson(e))
+    }
   }
 }
