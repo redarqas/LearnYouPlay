@@ -13,15 +13,15 @@ object Contractor {
   //Validation rule : required if podium is OR
   val readComplement = ((__ \ "podium").readNullable[String] and
     (__ \ "complement").readNullable[String]).tupled.filter(ValidationError("complement obligatoire si podium est à OR"))(r => r match {
-      case (Some("OR"), None) => println("false : "+ r);true
-      case _ => println("true : "+ r);false
+      case (Some("OR"), None) => false
+      case _ => true
     }) map (_._2)
-  
+
   implicit val readContractor: Reads[Contractor] = (readComplement and
-    (__ \ "name").read[String](email) and
-    (__ \ "email").read[String] and
-    (__ \ "podium").read[models.Podium])(Contractor.apply(_,_,_,_))
-  //Using macr for json writing
+    (__ \ "name").read[String] and
+    (__ \ "email").read[String](email) and
+    (__ \ "podium").read[models.Podium])(Contractor.apply(_, _, _, _))
+  //Using macro for json writing
   implicit val writeComplement = Json.writes[Contractor]
 
 }

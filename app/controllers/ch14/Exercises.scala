@@ -1,24 +1,18 @@
 package controllers.ch14
 
-import play.api.mvc.Controller
-import play.api.libs.json.JsValue
-import play.api.libs.json.JsNumber
-import play.api.libs.json.JsString
-import play.api.libs.json.JsPath
-import play.api.libs.json.Json
-import play.api.libs.json.ConstraintReads
-import play.api.mvc._
-import play.api.data._
-import play.api.libs.iteratee.Enumerator
-import play.api.data.validation._
-import views.html.defaultpages.badRequest
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.libs.json.Reads
+import scala.math.BigDecimal.double2bigDecimal
+import scala.math.BigDecimal.int2bigDecimal
+
 import models.Contractor
-import models.Contractor._
-import play.api.libs.json.JsError
-import play.api.libs.functional.FunctionalBuilder
+import models.Contractor.writeComplement
+import play.api.libs.iteratee.Enumerator
+import play.api.libs.json._
+import play.api.libs.json.Json.toJsFieldJsValueWrapper
+import play.api.libs.json.Reads._
+import play.api.mvc.Action
+import play.api.mvc.Controller
+import play.api.mvc.ResponseHeader
+import play.api.mvc.SimpleResult
 
 //Json Object : name / value
 //value are : string, number, Json Object, Json array, true/false, null
@@ -135,7 +129,7 @@ object Exercises extends Controller {
     "email" -> JsString("jamal"),
     "podium" -> JsString("OR"),
     "complement" -> JsString("complement"))
-    
+
   def readContractor = Action {
     val contractor = Contractor.readContractor.reads(jsContractor)
     contractor fold (
@@ -149,7 +143,7 @@ object Exercises extends Controller {
   def calculate = Action { implicit request =>
     //QueryString to Json 
     val v = Json.toJson(request.queryString.map(r => r._1 -> r._2.head))
-    Json.reads[Contractor].reads(v) map { r =>
+    Contractor.readContractor.reads(v) map { r =>
       Ok(Json.toJson(r))
     } recoverTotal {
       e => BadRequest("Detected error:" + JsError.toFlatJson(e))
