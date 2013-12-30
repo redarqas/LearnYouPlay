@@ -9,3 +9,10 @@
 /project/project
 /logs/
 /.worksheet/
+/.DS_Store
+
+target
+
+/tmp
+
+/logs

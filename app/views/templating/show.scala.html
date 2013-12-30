@@ -1,0 +1,48 @@
+@(customer: Customer, orders: Seq[Order], products: Seq[Product], escaped: String)
+@import helper._
+@import tags._
+
+@display(product: Product) = {
+  @product.name <br/> (@product.price)
+}
+
+@sidebar = {
+  @common.sidebar("")
+}
+
+@scripts = {
+  <script type="text/javascript">alert("hello !");</script>
+}
+
+@main("Template example", scripts)(sidebar) {
+    @defining(customer.firstName + " " + customer.lastName) { fullName =>
+      <div>Hello @fullName</div>
+    }
+
+    <h1>Contact : jamal@@gmail.com</h1>
+    @if(orders.isEmpty) {
+       <h1> Nothing to display </h1>
+    } else {
+       <h1>@orders.size task(s)</h1>
+    }
+    @for(order <- orders) {
+       <ul>
+        <li>@order.amount </li>
+       </ul>
+    }
+    
+    @for(product <- products) {
+      <ul>
+        <li>@display(product)</li>
+      </ul> 
+    }
+    <div>
+      @Html(escaped)
+    </div>
+    @notice("error") { color =>
+       <span style="color:@color">Oops something wrong</span>
+    }
+
+}
+
+

@@ -1,150 +1,124 @@
 # Routes
-# This file defines all ch01.Exercises routes (Higher priority routes first)
+# This file defines all application routes (Higher priority routes first)
 # ~~~~
-#------------------
-#Chapter 01
-#------------------
-# Static path
-GET     /                           controllers.ch01.Exercises.index
-GET     /echoVal                    controllers.ch01.Exercises.echoVal
-GET     /echoBlock                  controllers.ch01.Exercises.echoBlock
-GET     /echoRequest                controllers.ch01.Exercises.echoRequest
-GET     /echoImplicitRequest        controllers.ch01.Exercises.echoImplicitRequest
-GET     /echoWithBodyParser         controllers.ch01.Exercises.echoWithBodyParser
-GET     /simpleOkResult             controllers.ch01.Exercises.simpleOkResult
-GET     /ok                         controllers.ch01.Exercises.ok
-GET     /other                      controllers.ch01.Exercises.other
-GET     /redirectIt                 controllers.ch01.Exercises.redirectMe
-GET     /myTODO                     controllers.ch01.Exercises.myTODO
-GET     /withDefault                controllers.ch01.Exercises.withDefault(id: Long ?= 1)
-GET     /optionalParam              controllers.ch01.Exercises.optionalParam(version: Option[String])
 
-# Dynamic part 
-GET     /sayHello/:name             controllers.ch01.Exercises.echoProvidedName(name: String)
-GET     /resayHello/:name           controllers.ch01.Exercises.redirectToAction(name: String)
-GET     /sayReverseHello/:name      controllers.ch01.Exercises.reverseEchoProvidedName(name: String)
-# Span several /
-GET     /span/*theSpan              controllers.ch01.Exercises.spanIt(theSpan: String)
-# define a limit /
-GET     /limit/$id<[0-1]>           controllers.ch01.Exercises.limitZeroOne(id: Long)
+# Actions
+GET         /actions/                         controllers.actions.Application.index
+GET         /actions/hello                    controllers.actions.Application.hello(name:String)
+GET         /actions/simple                   controllers.actions.Application.simple
+GET         /actions/redirect                 controllers.actions.Application.redirect
+GET         /actions/anystatus                controllers.actions.Application.anyStatus
+GET         /actions/todo                     controllers.actions.Application.todo
+# Routing
+GET         /routing/clients/:name            controllers.routing.Application.show(name: String)
+GET         /routing/files/*name              controllers.routing.Application.files(name: String)
+GET         /routing/users/$id<[0-9]+>        controllers.routing.Application.someUsers(id: Long)
+GET         /routing/                         controllers.routing.Application.page(name = "home")
+GET         /routing/page/:name               controllers.routing.Application.page(name: String)
+GET         /routing/customer                 controllers.routing.Application.customer(id: Long ?= 1)
+GET         /routing/list-all                 controllers.routing.Application.list(version: Option[String])
+GET         /routing/helloBob                 controllers.routing.Application.reverse
+# Results
+GET         /results/text                     controllers.results.Application.text
+GET         /results/xml                      controllers.results.Application.xml
+GET         /results/xmlAsText                controllers.results.Application.xmlAsText
+GET         /results/header                   controllers.results.Application.header
+# Session flash
+GET         /sessions/                        controllers.sessions.Application.welcome
+GET         /sessions/read                    controllers.sessions.Application.read
+GET         /sessions/bye                     controllers.sessions.Application.bye
+GET         /sessions/goodbye                 controllers.sessions.Application.goodBye
+# falsh
+GET         /sessions/getFlash                controllers.sessions.Application.getFlash
+GET         /sessions/save                    controllers.sessions.Application.save
+# body parsers
+GET         /parsers/save                     controllers.parsers.Application.save
+GET         /parsers/read                     controllers.parsers.Application.read
+GET         /parsers/tolerant                 controllers.parsers.Application.tolerant
+GET         /parsers/tofile                   controllers.parsers.Application.tofile
+GET         /parsers/files/save               controllers.parsers.Application.saveUserFile
+GET         /parsers/files/limit              controllers.parsers.Application.textMax
+GET         /parsers/users/:name              controllers.parsers.Application.welcome(name: String)
+#Action compistion
+GET         /composition/                     controllers.composition.Application.index
+GET         /composition/submit               controllers.composition.Application.submit
+GET         /composition/login/:name          controllers.composition.Application.login(name: String)
+GET         /composition/currentUser          controllers.composition.Application.currentUser
+GET         /composition/log                  controllers.composition.Application.log
+#Asynchronous
+GET         /async/                           controllers.async.Application.index
+#streaming response
+GET         /stream/                          controllers.stream.Application.index
+GET         /stream/serve                     controllers.stream.Application.serve
+GET         /stream/serveFile                 controllers.stream.Application.serveFile
+GET         /stream/chunked                   controllers.stream.Application.chunked
+GET         /stream/enumit                    controllers.stream.Application.enumit
+#comet
+GET         /comet/events                     controllers.comet.Application.events
+GET         /comet/cometEvents                controllers.comet.Application.cometEvents
+GET         /comet/cometHelp                  controllers.comet.Application.cometHelp
+#Websocket
+GET         /websocket/                       controllers.websocket.Application.index
+GET         /websocket/broadcast              controllers.websocket.Application.broadcast
+#templating
+GET         /templating/show                  controllers.templating.Application.show
+#form
+GET         /forms/show                       controllers.forms.Application.show
+POST        /forms/create                     controllers.forms.Application.createUser
+GET         /forms/users/:id                  controllers.forms.Application.editUser(id: Long)
+#upload
+GET         /upload/show                      controllers.upload.Application.show
+POST        /upload/upload                    controllers.upload.Application.upload
+#Database
+GET         /db/example                       controllers.database.Application.example
+GET         /db/anorm                         controllers.database.Application.anorm
+GET         /db/delete                        controllers.database.Application.delete
+GET         /db/insert                        controllers.database.Application.insert
+GET         /db/cities                        controllers.database.Application.cities
+GET         /db/city                          controllers.database.Application.city
+GET         /db/count                         controllers.database.Application.count
+GET         /db/read                          controllers.database.Application.read
+GET         /db/complex                       controllers.database.Application.complex
+GET         /cache/login/:name                controllers.cache.Application.login(name: String)
+GET         /cache/welcome                    controllers.cache.Application.welcome
+GET         /cache/home                       controllers.cache.Application.home
+#web services
+GET         /ws/maps                          controllers.ws.Application.call
+GET         /ws/auth                          controllers.ws.Application.callAuth
+GET         /ws/follow                        controllers.ws.Application.options
+GET         /ws/large                         controllers.ws.Application.large
+#i18n
+GET         /i18n/usage                       controllers.i18n.Application.usage
+#Akka
+GET         /akka/increment                   controllers.akka.Application.increment
+#Iteratee
+GET         /it/done                          controllers.iteratee.Application.done
+GET         /it/first                         controllers.iteratee.Application.firstOne
+GET         /it/length                        controllers.iteratee.Application.length
+GET         /it/fw                            controllers.iteratee.Application.firstWithFeed
+GET         /it/all                           controllers.iteratee.Application.allFeedsInOne
+GET         /it/file                          controllers.iteratee.Application.fromFile
+GET         /it/willneverfinish               controllers.iteratee.Application.willneverfinish
+GET         /it/finish                        controllers.iteratee.Application.willfinish
+GET         /it/stream                        controllers.iteratee.Application.stream
+GET         /it/gen                           controllers.iteratee.Application.generate
+GET         /it/broadcast                     controllers.iteratee.Application.broadcast
+GET         /it/map                           controllers.iteratee.Application.map
+GET         /it/scan                          controllers.iteratee.Application.scan
+#json
+GET     /json/serveParsedJsonString         controllers.json.Application.serveParsedJsonString()
+GET     /json/serveRawJson                  controllers.json.Application.serveRawJson()
+GET     /json/servePrettyJsonString         controllers.json.Application.servePrettyJsonString()
+GET     /json/productName                   controllers.json.Application.productName()
+GET     /json/productsNames                 controllers.json.Application.productsNames()
+GET     /json/convertToScalaVal             controllers.json.Application.convertToScalaVal()
+GET     /json/validateOk                    controllers.json.Application.validateOk()
+GET     /json/validateNotFound              controllers.json.Application.validateNotFound()
+GET     /json/validateConvertNotPossible    controllers.json.Application.validateConvertNotPossible()
+GET     /json/validateRecursive             controllers.json.Application.validateRecursive()
+GET     /json/scalaToJson                   controllers.json.Application.scalaToJson()
+GET     /json/readContractor                controllers.json.Application.readContractor()
+GET     /json/calculate                     controllers.json.Application.calculate()
+
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
-
-#-----------------------------------
-# Chapter 03 : manipulating results 
-#-----------------------------------
-
-GET     /ch03/charsetIso_8859_1                controllers.ch03.Exercises.charsetIso_8859_1()
-GET     /ch03/hello                            controllers.ch03.Exercises.hello()
-GET     /ch03/helloAddCookie                   controllers.ch03.Exercises.helloAddCookie()
-GET     /ch03/helloDiscardCookie               controllers.ch03.Exercises.helloDiscardCookie()
-
-#---------------------------------------
-# Chapter 04 : Session and Flash scopes 
-#---------------------------------------
-
-GET     /ch04/login                            controllers.ch04.Exercises.login()
-GET     /ch04/welecome                         controllers.ch04.Exercises.welecome()
-GET     /ch04/logout                           controllers.ch04.Exercises.logout()
-GET     /ch04/save                             controllers.ch04.Exercises.save()
-GET     /ch04/home                             controllers.ch04.Exercises.home()
-GET     /ch04/lostFlash                        controllers.ch04.Exercises.lostFlash()
-
-#---------------------------------------
-# Chapter 05 : BodyParsers 
-#---------------------------------------
-
-PUT     /ch05/save                             controllers.ch05.Exercises.save()
-POST    /ch05/saveText                         controllers.ch05.Exercises.saveText()
-POST    /ch05/limitedText                      controllers.ch05.Exercises.limitedText()
-POST    /ch05/saveUpload                       controllers.ch05.Exercises.saveUpload()
-POST    /ch05/saveUploads                      controllers.ch05.Exercises.saveUploads()
-POST    /ch05/saveLimitUploads                 controllers.ch05.Exercises.saveLimitUploads()
-GET     /ch05/login                            controllers.ch05.Exercises.login
-
-#---------------------------------------
-# Chapter 06 : Action composition 
-#---------------------------------------
-
-POST     /ch06/index                           controllers.ch06.Exercises.index()
-POST     /ch06/hello                           controllers.ch06.Exercises.hello()
-POST     /ch06/user                            controllers.ch06.Exercises.user()
-GET      /ch06/needAuthenticateUser            controllers.ch06.Exercises.needAuthenticateUser()
-GET      /ch06/login                           controllers.ch06.Exercises.login()
-GET      /ch06/welcome                         controllers.ch06.Exercises.welcome()
-GET      /ch06/youCan                          controllers.ch06.Exercises.youCan()
-
-#---------------------------------------
-# Chapter 07 : Content negotiation 
-#---------------------------------------
-
-GET      /ch07/list                          controllers.ch07.Exercises.list()
-GET      /ch07/sylk                          controllers.ch07.Exercises.sylk()
-
-#---------------------------------------
-# Chapter 08 : Asynchronous results 
-#---------------------------------------
-
-GET      /ch08/accessDB                          controllers.ch08.Exercises.accessDB()
-GET      /ch08/accessDBTimeout                   controllers.ch08.Exercises.accessDBTimeout()
-
-#---------------------------------------
-# Chapter 09 : Streaming HTTP responses
-#---------------------------------------
-
-GET      /ch09/index                          controllers.ch09.Exercises.index()
-GET      /ch09/sendHeavyFile                  controllers.ch09.Exercises.sendHeavyFile()
-GET      /ch09/sendDownload                   controllers.ch09.Exercises.sendDownload()
-GET      /ch09/sendFileDisplay                controllers.ch09.Exercises.sendFileDisplay()
-GET      /ch09/stream                         controllers.ch09.Exercises.stream()
-
-#---------------------------------------
-# Chapter 10 : Comet sockets
-#---------------------------------------
-
-GET      /ch10/comet                         controllers.ch10.Exercises.comet()
-GET      /ch10/betterComet                   controllers.ch10.Exercises.betterComet()
-GET      /ch10/helperComet                   controllers.ch10.Exercises.helperComet()
-GET      /ch10/parentComet                   controllers.ch10.Exercises.parentComet()
-GET      /ch10/iframeComet                   controllers.ch10.Exercises.iframeComet()
-
-#---------------------------------------
-# Chapter 11 : WebSockets
-#---------------------------------------
-
-GET      /ch11/index                         controllers.ch11.Exercises.index()
-GET      /ch11/close                         controllers.ch11.Exercises.close()
-
-#---------------------------------------
-# Chapter 12 : The template engine
-#---------------------------------------
-
-GET      /ch12/:id/basics                    controllers.ch12.Exercises.basics(id: Long)
-GET      /ch12/:id/orders                    controllers.ch12.Exercises.orders(id: Long)
-GET      /ch12/rawcontent                    controllers.ch12.Exercises.rawContent
-
-#---------------------------------------
-# Chapter 13 : TODO : Forms
-#---------------------------------------
-
-#---------------------------------------
-# Chapter 14 : Json
-#---------------------------------------
-
-GET     /ch14/serveParsedJsonString         controllers.ch14.Exercises.serveParsedJsonString()
-GET     /ch14/serveRawJson                  controllers.ch14.Exercises.serveRawJson()
-GET     /ch14/servePrettyJsonString         controllers.ch14.Exercises.servePrettyJsonString()
-GET     /ch14/productName                   controllers.ch14.Exercises.productName()
-GET     /ch14/productsNames                 controllers.ch14.Exercises.productsNames()
-GET     /ch14/convertToScalaVal             controllers.ch14.Exercises.convertToScalaVal()
-GET     /ch14/validateOk                    controllers.ch14.Exercises.validateOk()
-GET     /ch14/validateNotFound              controllers.ch14.Exercises.validateNotFound()
-GET     /ch14/validateConvertNotPossible    controllers.ch14.Exercises.validateConvertNotPossible()
-GET     /ch14/validateRecursive             controllers.ch14.Exercises.validateRecursive()
-GET     /ch14/scalaToJson                   controllers.ch14.Exercises.scalaToJson()
-GET     /ch14/readContractor                controllers.ch14.Exercises.readContractor()
-GET     /ch14/calculate                     controllers.ch14.Exercises.calculate()
-
-
-
-
+GET         /assets/*file                     controllers.Assets.at(path="/public", file)

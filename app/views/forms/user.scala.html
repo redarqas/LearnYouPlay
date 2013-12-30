@@ -1,0 +1,9 @@
+@(userForm: Form[UserData])
+
+@helper.form(action = controllers.forms.routes.Application.createUser) {
+  @helper.inputText(userForm("name"))
+  @helper.inputText(userForm("age"), 'showConstraints -> true)
+  <input type="submit" name="nom" value="Envoyer ">
+}
+
+

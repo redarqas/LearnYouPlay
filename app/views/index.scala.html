@@ -1,11 +1,7 @@
 @(message: String)
 
-    
-    <iframe src="/ch10/iframeComet"></iframe>
+@main("Welcome to Play")(Html("")) {
 
-    <script type="text/javascript">
-      var cometMessage = function(event) {
-      console.log('Received event: ' + event)
-    }
-    </script>
-    
+    @play20.welcome(message)
+
+}

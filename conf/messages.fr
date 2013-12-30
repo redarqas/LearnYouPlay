@@ -1,0 +1,1 @@
+custom.massage=Le répertoire {0} contient {1} fichier
